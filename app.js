@@ -10,21 +10,27 @@ const foodDisplayContainer = document.getElementById('foodDisplayContainer');
 //     console.log(searchInput.value)
 // }
 
+window.addEventListener("load",()=>{
+  getData();
+})
+
 searchBtn.addEventListener("click",getData)
 
 function getData(){
-    const searchValue = searchInput.value;
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`
-    console.log()
+  document.getElementById("spinner").classList.remove('hidden');
+  const searchValue = searchInput.value;
+  const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`
+  console.log()
 
-    fetch(url)
-    .then((res)=>res.json())  //which is return data or we can use (res)=>{return res.json()}
-    .then((data)=>{
-      displayCards(data.meals);
-    })
-    .catch((error)=>{
-      console.log(error)
-    });
+  fetch(url)
+  .then((res)=>res.json())  //which is return data or we can use (res)=>{return res.json()}
+  .then((data)=>{
+    displayCards(data.meals);
+    document.getElementById("spinner").classList.add('hidden');
+  })
+  .catch((error)=>{
+    console.log(error)
+  });
 }
 
 function displayCards(data){
