@@ -34,6 +34,11 @@ function getData(){
 }
 
 function displayCards(data){
+
+  if(!data){
+    return foodDisplayContainer.innerHTML = "<h2>Search reasult not found</h2>";
+  }
+
   let childHtml = "";
   for (const item of data) {
     const { strMealThumb, strMeal, strInstructions, idMeal } = item;
