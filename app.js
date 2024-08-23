@@ -2,6 +2,7 @@
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const foodDisplayContainer = document.getElementById('foodDisplayContainer');
+const modalInfo = document.getElementById('modal-info');
 
 //check input object command
 //console.dir(searchInput)
@@ -20,7 +21,6 @@ function getData(){
   document.getElementById("spinner").classList.remove('hidden');
   const searchValue = searchInput.value;
   const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`
-  console.log()
 
   fetch(url)
   .then((res)=>res.json())  //which is return data or we can use (res)=>{return res.json()}
@@ -52,7 +52,7 @@ function displayCards(data){
               <p>
                 ${strInstructions.slice(0, 100)}
               </p>
-              <div class="card-actions justify-end" onclick="modalFn(${idMeal})"}>
+              <div class="card-actions justify-end" onclick="modalFn(${idMeal})"> 
                 <label for="my-modal-6" class="btn btn-warning text-white">View Details</label>
               </div>
             </div>
@@ -65,7 +65,18 @@ function displayCards(data){
   foodDisplayContainer.innerHTML = childHtml;
 }
 
+function modalFn(id){
+  const url = ` www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
 
+  fetch(url)
+  .then((res)=>res.json())  
+  .then((data)=>{
+    console.log(data)
+  })
+  .catch((error)=>{
+    console.log(error)
+  });
+}
 
 
 
