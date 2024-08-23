@@ -33,51 +33,47 @@ function getData(){
   });
 }
 
-function displayCards(data){
-
-  if(!data){
-    return foodDisplayContainer.innerHTML = "<h2>Search reasult not found</h2>";
+function displayCards(data) {
+  if (!data || data.length === 0) {
+      return (foodDisplayContainer.innerHTML = "<h2>No data found</h2>");
   }
 
   let childHtml = "";
   for (const item of data) {
-    const { strMealThumb, strMeal, strInstructions, idMeal } = item;
+      const { strMealThumb, strMeal, strInstructions, idMeal } = item;
 
-    let html = ` <div class="card card-compact bg-base-100 shadow-xl">
+      let html = ` 
+          <div class="card card-compact bg-base-100 shadow-xl">
               <figure>
-                <img class="w-full h-60 object-cover" src=${strMealThumb} alt="images"/>
+                  <img class="w-full h-60 object-cover" src=${strMealThumb} alt="Meal image"/>
               </figure>
-            <div class="card-body">
-              <h2 class="card-title">${strMeal}</h2>
-              <p>
-                ${strInstructions.slice(0, 100)}
-              </p>
-              <div class="card-actions justify-end" onclick="modalFn(${idMeal})"> 
-                <label for="my-modal-6" class="btn btn-warning text-white">View Details</label>
+              <div class="card-body">
+                  <h2 class="card-title">${strMeal}</h2>
+                  <p>${strInstructions.slice(0, 100)}</p>
+                  <div class="card-actions justify-end" onclick="modalFn(${idMeal})">
+                      <label for="my-modal-6" class="btn btn-warning text-white">View Details</label>
+                  </div>
               </div>
-            </div>
-          </div> `;
+          </div>`;
 
-    childHtml = childHtml + html;
+      childHtml += html;
   }
-
-
   foodDisplayContainer.innerHTML = childHtml;
 }
 
-function modalFn(id){
-  const url = ` www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+function modalFn(id) {
+  const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
   fetch(url)
-  .then((res)=>res.json())  
-  .then((data)=>{
-    console.log(data)
-  })
-  .catch((error)=>{
-    console.log(error)
-  });
+      .then((res) => res.json())
+      .then((data) => {
+          console.log(data);
+          // Add code to display data in the modal
+      })
+      .catch((error) => {
+          console.error("Error fetching modal data:", error);
+      });
 }
-
 
 
 
